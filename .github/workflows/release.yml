@@ -1,0 +1,27 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Verify tag matches Cargo.toml
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          ver="$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)"
+          if [ "$tag" != "$ver" ]; then
+            echo "Tag v$tag does not match Cargo.toml version $ver"
+            exit 1
+          fi
+      - name: Test
+        run: cargo test
+      - name: Publish to crates.io
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: cargo publish

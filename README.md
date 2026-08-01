@@ -29,16 +29,15 @@ use option_sdk::App;
 use option_sdk::{App, color_on_stderr, color_on_stdout, expand_tilde};
 
 let app = App::OPSH;
-let dir = app.ensure()?;                 // ~/.option/opsh (+ legacy migrate)
-let cfg = app.config_toml();             // ~/.option/opsh/config.toml
-let cache = app.ensure_cache()?;         // ~/.option/opsh/cache
-let history = app.path("history");       // ~/.option/opsh/history
+let _cfg = app.config_toml(); // ~/.option/opsh/config.toml
+let _history = app.path("history"); // ~/.option/opsh/history
+// app.ensure()? and app.ensure_cache()? create dirs + migrate legacy trees
 
 assert_eq!(app.mark(), "◆");
 assert_eq!(app.bundle_id(), "io.option.opsh");
 assert_eq!(expand_tilde("~/Music"), option_sdk::home_dir().join("Music"));
-let _ = color_on_stdout();               // NO_COLOR + stdout is a TTY
-let _ = color_on_stderr();               // NO_COLOR + stderr is a TTY
+let _ = color_on_stdout(); // NO_COLOR + stdout is a TTY
+let _ = color_on_stderr(); // NO_COLOR + stderr is a TTY
 ```
 
 ## Features (v0.1)
@@ -71,4 +70,4 @@ See [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 
-Apache-2.0 — see [`LICENSE`](LICENSE).
+Apache-2.0 — see the `LICENSE` file in the repository.

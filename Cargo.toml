@@ -1,6 +1,6 @@
 [package]
 name = "optionSDK"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2024"
 rust-version = "1.85"
 description = "Shared paths, identity, and helpers for Option family apps"
@@ -12,11 +12,15 @@ repository = "https://github.com/fireflylabss/optionSDK"
 documentation = "https://docs.rs/optionSDK"
 keywords = ["option", "paths", "cli", "local-first", "sdk"]
 categories = ["filesystem", "command-line-utilities"]
-exclude = ["target/"]
+exclude = ["target/", ".github/"]
 
 [lib]
 name = "option_sdk"
 path = "src/lib.rs"
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]
 

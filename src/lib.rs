@@ -1,9 +1,5 @@
 //! Shared paths, identity, and helpers for Option family apps (`optionSDK`).
-//!
-//! Local-first. No network. No daemon.
-//!
-//! Override the shared root with `OPTION_HOME` (replaces `~/.option`) for
-//! tests and sandboxes.
+#![doc = include_str!("../README.md")]
 
 mod app;
 mod color;

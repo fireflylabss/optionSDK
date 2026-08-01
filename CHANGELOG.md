@@ -9,9 +9,17 @@ Every version string starts with `v` (required), e.g. `v0.1.1`.
 
 This project publishes **plain SemVer** to crates.io — no app surfaces, no `m` mixed tags, and no alpha/beta/stable channel suffixes in the tag. `Cargo.toml`, git tags, and crates.io use the same numeric version (`0.1.1` / `v0.1.1`).
 
-Each release heading is the version and date (`## v0.1.1 · 01/08/2026`); under it, a short summary ends with a plain sentence like: “This version was published to crates.io on 01/08/2026 (v0.1.1).”
+Each release heading is the version and date (`## v0.1.2 · 01/08/2026`); under it, a short summary ends with a plain sentence like: “This version was published to crates.io on 01/08/2026 (v0.1.2).”
 
 </details>
+
+## v0.1.2 · 01/08/2026
+
+Docs on docs.rs, doctests from the README, and crates.io publish on version tags. This version was published to crates.io on 01/08/2026 (v0.1.2).
+
+- Crate docs include the README (`#![doc = include_str!(…)]`) so docs.rs matches GitHub.
+- CI runs `cargo test --doc` and `cargo doc`; release workflow publishes to crates.io when a `v*` tag matches `Cargo.toml`.
+- Various other small tweaks
 
 ## v0.1.1 · 01/08/2026
 
