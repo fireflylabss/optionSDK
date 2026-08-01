@@ -43,22 +43,20 @@ pub fn expand_tilde(path: impl AsRef<Path>) -> PathBuf {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::test_env;
     use std::path::Path;
-    use std::sync::Mutex;
-
-    static ENV_LOCK: Mutex<()> = Mutex::new(());
 
     #[test]
     fn option_root_under_home() {
-        let _guard = ENV_LOCK.lock().unwrap();
+        let _guard = test_env::lock();
         // SAFETY: tests serialize env mutation via ENV_LOCK.
         unsafe {
             std::env::remove_var("OPTION_HOME");
-            std::env::set_var("HOME", "/tmp/option-core-home");
+            std::env::set_var("HOME", "/tmp/option-sdk-home");
         }
         assert_eq!(
             option_root(),
-            Path::new("/tmp/option-core-home").join(".option")
+            Path::new("/tmp/option-sdk-home").join(".option")
         );
         unsafe {
             std::env::remove_var("HOME");
@@ -67,10 +65,10 @@ mod tests {
 
     #[test]
     fn option_home_overrides_root() {
-        let _guard = ENV_LOCK.lock().unwrap();
+        let _guard = test_env::lock();
         // SAFETY: tests serialize env mutation via ENV_LOCK.
         unsafe {
-            std::env::set_var("HOME", "/tmp/option-core-home");
+            std::env::set_var("HOME", "/tmp/option-sdk-home");
             std::env::set_var("OPTION_HOME", "/tmp/option-sandbox");
         }
         assert_eq!(option_root(), Path::new("/tmp/option-sandbox"));
@@ -82,15 +80,15 @@ mod tests {
 
     #[test]
     fn empty_option_home_falls_through() {
-        let _guard = ENV_LOCK.lock().unwrap();
+        let _guard = test_env::lock();
         // SAFETY: tests serialize env mutation via ENV_LOCK.
         unsafe {
-            std::env::set_var("HOME", "/tmp/option-core-home");
+            std::env::set_var("HOME", "/tmp/option-sdk-home");
             std::env::set_var("OPTION_HOME", "");
         }
         assert_eq!(
             option_root(),
-            Path::new("/tmp/option-core-home").join(".option")
+            Path::new("/tmp/option-sdk-home").join(".option")
         );
         unsafe {
             std::env::remove_var("OPTION_HOME");
@@ -100,7 +98,7 @@ mod tests {
 
     #[test]
     fn home_dir_prefers_home_over_userprofile() {
-        let _guard = ENV_LOCK.lock().unwrap();
+        let _guard = test_env::lock();
         // SAFETY: tests serialize env mutation via ENV_LOCK.
         unsafe {
             std::env::set_var("HOME", "/tmp/from-home");
@@ -115,7 +113,7 @@ mod tests {
 
     #[test]
     fn home_dir_falls_back_to_userprofile() {
-        let _guard = ENV_LOCK.lock().unwrap();
+        let _guard = test_env::lock();
         // SAFETY: tests serialize env mutation via ENV_LOCK.
         unsafe {
             std::env::remove_var("HOME");
@@ -129,15 +127,15 @@ mod tests {
 
     #[test]
     fn expand_tilde_home_and_join() {
-        let _guard = ENV_LOCK.lock().unwrap();
+        let _guard = test_env::lock();
         // SAFETY: tests serialize env mutation via ENV_LOCK.
         unsafe {
-            std::env::set_var("HOME", "/tmp/option-core-home");
+            std::env::set_var("HOME", "/tmp/option-sdk-home");
         }
-        assert_eq!(expand_tilde("~"), Path::new("/tmp/option-core-home"));
+        assert_eq!(expand_tilde("~"), Path::new("/tmp/option-sdk-home"));
         assert_eq!(
             expand_tilde("~/Music"),
-            Path::new("/tmp/option-core-home").join("Music")
+            Path::new("/tmp/option-sdk-home").join("Music")
         );
         assert_eq!(expand_tilde("/abs"), Path::new("/abs"));
         assert_eq!(expand_tilde("relative"), Path::new("relative"));

@@ -246,9 +246,7 @@ mod tests {
 
     #[test]
     fn ensure_cache_creates_tree() {
-        use std::sync::Mutex;
-        static ENV_LOCK: Mutex<()> = Mutex::new(());
-        let _guard = ENV_LOCK.lock().unwrap();
+        let _guard = crate::test_env::lock();
         let root = tempfile::tempdir().unwrap();
         // SAFETY: tests serialize env mutation via ENV_LOCK.
         unsafe {

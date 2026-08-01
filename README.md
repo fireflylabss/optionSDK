@@ -26,7 +26,7 @@ use option_sdk::App;
 ## Usage
 
 ```rust
-use option_sdk::{App, color_on_stdout, expand_tilde};
+use option_sdk::{App, color_on_stderr, color_on_stdout, expand_tilde};
 
 let app = App::OPSH;
 let dir = app.ensure()?;                 // ~/.option/opsh (+ legacy migrate)
@@ -38,6 +38,7 @@ assert_eq!(app.mark(), "◆");
 assert_eq!(app.bundle_id(), "io.option.opsh");
 assert_eq!(expand_tilde("~/Music"), option_sdk::home_dir().join("Music"));
 let _ = color_on_stdout();               // NO_COLOR + stdout is a TTY
+let _ = color_on_stderr();               // NO_COLOR + stderr is a TTY
 ```
 
 ## Features (v0.1)
@@ -49,7 +50,11 @@ let _ = color_on_stdout();               // NO_COLOR + stdout is a TTY
 | Override | `OPTION_HOME` — replace `~/.option` (tests / sandboxes) |
 | Migrate | `migrate_dir()`, `migrate_file()` for app-specific leftovers |
 | Identity | id, mark (◇◆♪), display name, `io.option.*` bundle id |
-| Color | `color_enabled()` (`NO_COLOR`), `color_on_stdout()` (`NO_COLOR` + TTY) |
+| Color | `color_enabled()` (`NO_COLOR`), `color_on_stdout()` / `color_on_stderr()` (`NO_COLOR` + TTY) |
+
+## Versioning
+
+See [VERSIONING.md](VERSIONING.md) and [CHANGELOG.md](CHANGELOG.md).
 
 ## Layout
 
