@@ -54,7 +54,7 @@ let _ = color_on_stderr();               // NO_COLOR + stderr is a TTY
 
 ## Versioning
 
-See [VERSIONING.md](VERSIONING.md) and [CHANGELOG.md](CHANGELOG.md).
+See [CHANGELOG.md](CHANGELOG.md).
 
 ## Layout
 

@@ -1,28 +1,34 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+We follow [Semantic Versioning](https://semver.org/) and [Keep a Changelog](https://keepachangelog.com/). optionSDK is the shared Rust crate on [crates.io](https://crates.io/crates/optionSDK) (`option_sdk` in Rust).
 
-Versioning, surfaces, and channels: see [VERSIONING.md](VERSIONING.md).
+<details>
+<summary>To see more about versioning, expand this.</summary>
 
-## [0.1.1-stable] - 2026-08-01
+Every version string starts with `v` (required), e.g. `v0.1.1`.
 
-### Added
+This project publishes **plain SemVer** to crates.io — no app surfaces, no `m` mixed tags, and no alpha/beta/stable channel suffixes in the tag. `Cargo.toml`, git tags, and crates.io use the same numeric version (`0.1.1` / `v0.1.1`).
+
+Each release heading is the version and date (`## v0.1.1 · 01/08/2026`); under it, a short summary ends with a plain sentence like: “This version was published to crates.io on 01/08/2026 (v0.1.1).”
+
+</details>
+
+## v0.1.1 · 01/08/2026
+
+Stderr color helper and safer env tests. This version was published to crates.io on 01/08/2026 (v0.1.1).
 
 - `color_on_stderr()` — `NO_COLOR` plus stderr is a TTY (mirror of `color_on_stdout()`).
+- Tests that mutate process environment share one crate-wide `ENV_LOCK`, so parallel threads cannot race on `$HOME` / `OPTION_HOME` / `NO_COLOR`.
+- Various other small tweaks
 
-### Changed
+## v0.1.0 · 01/08/2026
 
-- Tests that mutate process environment now share one crate-wide `ENV_LOCK`, so parallel test threads cannot race on `$HOME` / `OPTION_HOME` / `NO_COLOR`.
+First crates.io release of the shared Option paths and identity helpers. This version was published to crates.io on 01/08/2026 (v0.1.0).
 
-## [0.1.0-stable] - 2026-08-01
-
-### Added
-
-- First crates.io release of **optionSDK** (Rust crate name `option_sdk`).
 - App identity registry: `opsh`, `terminal`, `music`, `files`, `os`, `de`, `fat`, `notes` — mark, display name, `io.option.*` bundle id.
 - Paths: `home_dir()`, `option_root()`, `expand_tilde()`, `App::dir()`, `config_toml()`, `cache_dir()`, `keys_toml()`, `session_toml()`, `path()`.
 - `OPTION_HOME` override for the shared root (tests / sandboxes).
-- `App::ensure()` / `App::ensure_cache()` with known legacy-tree migrate.
-- `migrate_dir()` / `migrate_file()` helpers.
+- `App::ensure()` / `App::ensure_cache()` with known legacy-tree migrate; `migrate_dir()` / `migrate_file()` helpers.
 - Color: `color_enabled()` (`NO_COLOR`), `color_on_stdout()` (`NO_COLOR` + TTY).
 - CI workflow (fmt, test, release build).
+- Various other small tweaks
