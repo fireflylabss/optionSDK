@@ -3,6 +3,7 @@
 
 mod app;
 mod color;
+mod fs;
 mod migrate;
 mod paths;
 
@@ -11,5 +12,6 @@ mod test_env;
 
 pub use app::App;
 pub use color::{color_enabled, color_on_stderr, color_on_stdout};
+pub use fs::atomic_write;
 pub use migrate::{migrate_dir, migrate_file};
 pub use paths::{expand_tilde, home_dir, option_root};

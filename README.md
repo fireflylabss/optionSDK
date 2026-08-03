@@ -50,6 +50,7 @@ let _ = color_on_stderr(); // NO_COLOR + stderr is a TTY
 | Migrate | `migrate_dir()`, `migrate_file()` for app-specific leftovers |
 | Identity | id, mark (◇◆♪), display name, `io.option.*` bundle id |
 | Color | `color_enabled()` (`NO_COLOR`), `color_on_stdout()` / `color_on_stderr()` (`NO_COLOR` + TTY) |
+| Persistence | `atomic_write()` — flush and sync a sibling temporary file before replacement |
 
 ## Versioning
 

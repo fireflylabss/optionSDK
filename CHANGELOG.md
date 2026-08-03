@@ -9,9 +9,17 @@ Every version string starts with `v` (required), e.g. `v0.1.1`.
 
 This project publishes **plain SemVer** to crates.io — no app surfaces, no `m` mixed tags, and no alpha/beta/stable channel suffixes in the tag. `Cargo.toml`, git tags, and crates.io use the same numeric version (`0.1.1` / `v0.1.1`).
 
-Each release heading is the version and date (`## v0.1.2 · 01/08/2026`); under it, a short summary ends with a plain sentence like: “This version was published to crates.io on 01/08/2026 (v0.1.2).”
+Each release heading is the version and date (`## v0.1.3 · 03/08/2026`); under it, a short summary ends with a plain sentence like: “This version was made for the shared SDK on 03/08/2026 (v0.1.3).”
 
 </details>
+
+## v0.1.3 · 03/08/2026
+
+Atomic persistence and canonical app identity for the Option family. This version was made for the shared SDK on 03/08/2026 (v0.1.3).
+
+- Add `atomic_write()` for settings and state files that must not be exposed half-written.
+- Correct the shared `optionMusic` display name so SDK consumers agree on the product identity.
+- Move the tempfile implementation dependency into the public library runtime.
 
 ## v0.1.2 · 01/08/2026
 

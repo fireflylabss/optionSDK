@@ -39,7 +39,7 @@ impl App {
     pub const MUSIC: Self = Self {
         id: "music",
         mark: "♪",
-        display_name: "optMusic",
+        display_name: "optionMusic",
         dir_name: "music",
         legacy_home_parts: &["option", "music"],
     };
@@ -211,6 +211,7 @@ mod tests {
         assert_eq!(App::NOTES.bundle_id(), "io.option.notes");
         assert_eq!(App::OPSH.mark(), "◆");
         assert_eq!(App::MUSIC.mark(), "♪");
+        assert_eq!(App::MUSIC.display_name(), "optionMusic");
         assert_eq!(App::NOTES.mark(), "◇");
         assert_eq!(App::NOTES.display_name(), "optionNotes");
     }
