@@ -84,6 +84,14 @@ impl App {
         legacy_home_parts: &[".config/optionnotes"],
     };
 
+    pub const CAL: Self = Self {
+        id: "cal",
+        mark: "◷",
+        display_name: "optionCalendar",
+        dir_name: "cal",
+        legacy_home_parts: &[],
+    };
+
     /// All known family apps.
     pub const ALL: &'static [Self] = &[
         Self::OPSH,
@@ -94,6 +102,7 @@ impl App {
         Self::DE,
         Self::FAT,
         Self::NOTES,
+        Self::CAL,
     ];
 
     /// Build a custom app identity (no built-in legacy migrate).

@@ -13,6 +13,10 @@ Each release heading is the version and date (`## v0.1.3 · 03/08/2026`); under 
 
 </details>
 
+## Unreleased
+
+- Add `App::CAL` (`◷ optionCalendar`, `~/.option/cal/`) to the known family apps; required by optionCalendar v0.1.0.
+
 ## v0.1.3 · 03/08/2026
 
 Atomic persistence and canonical app identity for the Option family. This version was made for the shared SDK on 03/08/2026 (v0.1.3).
