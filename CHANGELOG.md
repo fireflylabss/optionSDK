@@ -13,11 +13,21 @@ Each release heading is the version and date (`## v0.1.3 · 03/08/2026`); under 
 
 </details>
 
-## v0.1.4 · 13/09/2026
+## v0.1.4 · 19/09/2026
 
-Adds optionCalendar to the known Option family apps. This version was made for the shared SDK on 13/09/2026 (v0.1.4).
+Adds optionCalendar and optionSearch to the family registry, plus shared config, crash, doctor, terminal style and user-dir helpers. This version was made for the shared SDK on 19/09/2026 (v0.1.4).
 
 - Add `App::CAL` (`◷ optionCalendar`, `~/.option/cal/`) to the known family apps; required by optionCalendar v0.1.0.
+- Add `App::SEARCH` (`search` / `⌕` / `optionSearch`, dir `search/`) to `App::ALL`; `App::known("needle")` resolves to `SEARCH` as a legacy alias of the rename.
+- Config: `load_toml()`, `load_toml_chain()`, `save_toml()` plus `App::load_config()` / `App::save_config()` — typed TOML under `config.toml`, persisted via `atomic_write()`.
+- Crash: `install_crash_hook()` and `crash_log_path()` — shared panic hook appending timestamped entries to `~/.option/<app>/crash.log`.
+- Doctor: `doctor::Report` / `doctor::Check` / `doctor::Status` with `checks::{state_dir, file, binary}` — text and single-line JSON rendering for `doctor [--json]` commands.
+- Term: `Style` — ANSI `bold`/`dim`/`ok`/`warn`/`err` and `mark_line()`; `Style::stdout()` / `Style::stderr()` pick up terminal detection.
+- User dirs: `user_dirs::{data_home, config_home, cache_home, documents, music, downloads, pictures}` — XDG-aware, resolves `user-dirs.dirs` localized names on Unix.
+- `App::new()` accepts owned `String` ids; `App::try_path()` rejects absolute and `..` paths for untrusted input.
+- `migrate_dir()` / `migrate_file()` fall back to copy + remove across filesystems.
+- `color_on_stdout()` / `color_on_stderr()` now return false when `TERM=dumb`.
+- Add `serde` and `toml` as runtime dependencies.
 
 ## v0.1.3 · 03/08/2026
 

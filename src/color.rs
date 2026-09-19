@@ -10,14 +10,21 @@ pub fn color_enabled() -> bool {
     std::env::var_os("NO_COLOR").is_none()
 }
 
-/// Whether stdout should use color: [`color_enabled`] and stdout is a terminal.
+/// Whether stdout should use color: [`color_enabled`], `TERM` is not `dumb`,
+/// and stdout is a terminal.
 pub fn color_on_stdout() -> bool {
-    color_enabled() && io::stdout().is_terminal()
+    color_enabled() && !term_is_dumb() && io::stdout().is_terminal()
 }
 
-/// Whether stderr should use color: [`color_enabled`] and stderr is a terminal.
+/// Whether stderr should use color: [`color_enabled`], `TERM` is not `dumb`,
+/// and stderr is a terminal.
 pub fn color_on_stderr() -> bool {
-    color_enabled() && io::stderr().is_terminal()
+    color_enabled() && !term_is_dumb() && io::stderr().is_terminal()
+}
+
+/// `TERM=dumb` terminals do not interpret ANSI escapes.
+fn term_is_dumb() -> bool {
+    std::env::var_os("TERM").is_some_and(|v| v == "dumb")
 }
 
 #[cfg(test)]
@@ -41,6 +48,26 @@ mod tests {
         assert!(!color_on_stderr());
         unsafe {
             std::env::remove_var("NO_COLOR");
+        }
+    }
+
+    #[test]
+    fn term_dumb_disables_color() {
+        let _guard = test_env::lock();
+        let saved_term = std::env::var_os("TERM");
+        // SAFETY: tests serialize env mutation via ENV_LOCK.
+        unsafe {
+            std::env::remove_var("NO_COLOR");
+            std::env::set_var("TERM", "dumb");
+        }
+        assert!(color_enabled());
+        assert!(!color_on_stdout());
+        assert!(!color_on_stderr());
+        unsafe {
+            match saved_term {
+                Some(term) => std::env::set_var("TERM", term),
+                None => std::env::remove_var("TERM"),
+            }
         }
     }
 }
