@@ -57,7 +57,7 @@ App::CAL.save_config(&settings)?;
 # Ok::<(), option_sdk::ConfigError>(())
 ```
 
-## Features (v0.1.4)
+## Features (v0.1.6)
 
 | Area | API |
 |------|-----|

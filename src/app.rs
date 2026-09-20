@@ -324,6 +324,31 @@ mod tests {
     }
 
     #[test]
+    fn music_legacy_path_segments() {
+        let _guard = crate::test_env::lock();
+        let home = tempfile::tempdir().unwrap();
+        let root = tempfile::tempdir().unwrap();
+        let legacy = home.path().join("option").join("music");
+        std::fs::create_dir_all(&legacy).unwrap();
+        std::fs::write(legacy.join("keep.txt"), b"ok").unwrap();
+        // SAFETY: tests serialize env mutation via ENV_LOCK.
+        unsafe {
+            std::env::set_var("HOME", home.path());
+            std::env::set_var("OPTION_HOME", root.path());
+        }
+        assert!(App::MUSIC.migrate_legacy().unwrap());
+        assert_eq!(
+            std::fs::read_to_string(root.path().join("music").join("keep.txt")).unwrap(),
+            "ok"
+        );
+        assert!(!legacy.exists());
+        unsafe {
+            std::env::remove_var("OPTION_HOME");
+            std::env::remove_var("HOME");
+        }
+    }
+
+    #[test]
     fn well_known_paths() {
         assert_eq!(
             App::TERMINAL

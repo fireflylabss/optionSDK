@@ -13,6 +13,13 @@ Each release heading is the version and date (`## v0.1.3 · 03/08/2026`); under 
 
 </details>
 
+## v0.1.6 · 20/09/2026
+
+Docs and test polish on top of the registry cleanup. This version was made for the shared SDK on 20/09/2026 (v0.1.6).
+
+- Fix the README features heading to track the crate version.
+- Cover `App::MUSIC`'s legacy-tree migration with a test again — the `notes` case left together with the app.
+
 ## v0.1.5 · 20/09/2026
 
 Removes the deprecated `fat` and `notes` apps from the family registry, and gives opsh its own mark. This version was made for the shared SDK on 20/09/2026 (v0.1.5).
