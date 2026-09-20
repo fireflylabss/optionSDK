@@ -107,7 +107,7 @@ mod tests {
     #[test]
     fn mark_line_plain() {
         let style = Style::plain();
-        assert_eq!(style.mark_line(&App::OPSH, "opsh doctor"), "◆ opsh doctor");
+        assert_eq!(style.mark_line(&App::OPSH, "opsh doctor"), "❯ opsh doctor");
     }
 
     #[test]
@@ -115,7 +115,7 @@ mod tests {
         let style = Style::new(true);
         assert_eq!(
             style.mark_line(&App::OPSH, "doctor"),
-            "\x1b[1m◆\x1b[0m doctor"
+            "\x1b[1m❯\x1b[0m doctor"
         );
     }
 }

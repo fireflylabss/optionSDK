@@ -16,7 +16,7 @@ pub enum Status {
 }
 
 impl Status {
-    /// Text rendering uses the wording opsh/fat already print.
+    /// Text rendering uses the wording opsh already prints.
     fn text_word(self) -> &'static str {
         match self {
             Self::Ok => "ok",
@@ -263,7 +263,7 @@ mod tests {
             .fail("binary", Some("zig".to_string()));
         let text = report.render_text(&Style::plain());
         assert!(!text.contains('\x1b'));
-        assert!(text.starts_with("◆ opsh doctor\n"));
+        assert!(text.starts_with("❯ opsh doctor\n"));
         assert!(text.contains("  state dir: /tmp/x (ok)\n"));
         assert!(text.contains("  shell: warn\n"));
         assert!(text.contains("  binary: zig (missing)\n"));
@@ -292,11 +292,11 @@ mod tests {
         unsafe {
             std::env::set_var("OPTION_HOME", root.path());
         }
-        let check = checks::state_dir(&App::FAT);
+        let check = checks::state_dir(&App::FILES);
         assert_eq!(check.status, Status::Fail);
         assert_eq!(check.label, "state dir");
-        App::FAT.ensure().unwrap();
-        assert_eq!(checks::state_dir(&App::FAT).status, Status::Ok);
+        App::FILES.ensure().unwrap();
+        assert_eq!(checks::state_dir(&App::FILES).status, Status::Ok);
         unsafe {
             std::env::remove_var("OPTION_HOME");
         }

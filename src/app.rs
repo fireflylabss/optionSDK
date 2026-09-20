@@ -28,7 +28,7 @@ pub struct App {
 impl App {
     pub const OPSH: Self = Self {
         id: Cow::Borrowed("opsh"),
-        mark: Cow::Borrowed("◆"),
+        mark: Cow::Borrowed("❯"),
         display_name: Cow::Borrowed("opsh"),
         dir_name: Cow::Borrowed("opsh"),
         legacy_home_parts: &[],
@@ -74,22 +74,6 @@ impl App {
         legacy_home_parts: &[".optionde"],
     };
 
-    pub const FAT: Self = Self {
-        id: Cow::Borrowed("fat"),
-        mark: Cow::Borrowed("◆"),
-        display_name: Cow::Borrowed("fat"),
-        dir_name: Cow::Borrowed("fat"),
-        legacy_home_parts: &[],
-    };
-
-    pub const NOTES: Self = Self {
-        id: Cow::Borrowed("notes"),
-        mark: Cow::Borrowed("◇"),
-        display_name: Cow::Borrowed("optionNotes"),
-        dir_name: Cow::Borrowed("notes"),
-        legacy_home_parts: &[".config", "optionnotes"],
-    };
-
     pub const CAL: Self = Self {
         id: Cow::Borrowed("cal"),
         mark: Cow::Borrowed("◷"),
@@ -114,8 +98,6 @@ impl App {
         Self::FILES,
         Self::OS,
         Self::DE,
-        Self::FAT,
-        Self::NOTES,
         Self::CAL,
         Self::SEARCH,
     ];
@@ -263,7 +245,6 @@ mod tests {
     #[test]
     fn known_lookup() {
         assert_eq!(App::known("opsh"), Some(App::OPSH));
-        assert_eq!(App::known("notes"), Some(App::NOTES));
         assert_eq!(App::known("search"), Some(App::SEARCH));
         assert_eq!(App::known("needle"), Some(App::SEARCH));
         assert_eq!(App::known("nope"), None);
@@ -273,12 +254,9 @@ mod tests {
     fn bundle_ids() {
         assert_eq!(App::MUSIC.bundle_id(), "io.option.music");
         assert_eq!(App::TERMINAL.bundle_id(), "io.option.terminal");
-        assert_eq!(App::NOTES.bundle_id(), "io.option.notes");
-        assert_eq!(App::OPSH.mark(), "◆");
+        assert_eq!(App::OPSH.mark(), "❯");
         assert_eq!(App::MUSIC.mark(), "♪");
         assert_eq!(App::MUSIC.display_name(), "optionMusic");
-        assert_eq!(App::NOTES.mark(), "◇");
-        assert_eq!(App::NOTES.display_name(), "optionNotes");
         assert_eq!(App::SEARCH.bundle_id(), "io.option.search");
         assert_eq!(App::SEARCH.mark(), "⌕");
         assert_eq!(App::SEARCH.display_name(), "optionSearch");
@@ -342,31 +320,6 @@ mod tests {
         assert!(App::FILES.try_path("a/../../x").is_err());
         unsafe {
             std::env::remove_var("OPTION_HOME");
-        }
-    }
-
-    #[test]
-    fn notes_legacy_path_segments() {
-        let _guard = crate::test_env::lock();
-        let home = tempfile::tempdir().unwrap();
-        let root = tempfile::tempdir().unwrap();
-        let legacy = home.path().join(".config").join("optionnotes");
-        std::fs::create_dir_all(&legacy).unwrap();
-        std::fs::write(legacy.join("keep.txt"), b"ok").unwrap();
-        // SAFETY: tests serialize env mutation via ENV_LOCK.
-        unsafe {
-            std::env::set_var("HOME", home.path());
-            std::env::set_var("OPTION_HOME", root.path());
-        }
-        assert!(App::NOTES.migrate_legacy().unwrap());
-        assert_eq!(
-            std::fs::read_to_string(root.path().join("notes").join("keep.txt")).unwrap(),
-            "ok"
-        );
-        assert!(!legacy.exists());
-        unsafe {
-            std::env::remove_var("OPTION_HOME");
-            std::env::remove_var("HOME");
         }
     }
 

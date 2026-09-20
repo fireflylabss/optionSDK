@@ -7,9 +7,9 @@ Modules: TOML config (`load_toml`, `save_toml`, `load_toml_chain`,
 `crash_log_path`), `doctor` reports (`Report`, `Check`, `checks::*`),
 terminal `Style`, and `user_dirs::*` (XDG folders).
 
-## Apps (10)
+## Apps (8)
 
-`opsh`, `terminal`, `music`, `files`, `os`, `de`, `fat`, `notes`, `cal`,
+`opsh`, `terminal`, `music`, `files`, `os`, `de`, `cal`,
 `search` (see `App::ALL`). `App::new(id, mark, display_name)` builds a
 custom app (`dir_name` = `id`, no legacy migration). `App::known(id)`
 looks up by id (`"needle"` resolves to `SEARCH`).

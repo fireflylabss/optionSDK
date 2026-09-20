@@ -1,7 +1,7 @@
 # optionSDK
 
 Shared paths, identity, and helpers for **Option** family apps
-(`opsh`, `optionTerm`, `optionMusic`, `optionFiles`, `optionNotes`, …).
+(`opsh`, `optionTerm`, `optionMusic`, `optionFiles`, `optionCalendar`, `optionSearch`, …).
 
 Local-first. No network. No daemon.
 
@@ -33,7 +33,7 @@ let _cfg = app.config_toml(); // ~/.option/opsh/config.toml
 let _history = app.path("history"); // ~/.option/opsh/history
 // app.ensure()? and app.ensure_cache()? create dirs + migrate legacy trees
 
-assert_eq!(app.mark(), "◆");
+assert_eq!(app.mark(), "❯");
 assert_eq!(app.bundle_id(), "io.option.opsh");
 assert_eq!(expand_tilde("~/Music"), option_sdk::home_dir().join("Music"));
 let _ = color_on_stdout(); // NO_COLOR + stdout is a TTY
@@ -48,12 +48,12 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Default)]
 struct Settings {
-    vault: Option<String>,
+    week_start: Option<String>,
 }
 
 // Creates the file with defaults on first run; reads it afterwards.
-let settings = App::NOTES.load_config::<Settings>()?;
-App::NOTES.save_config(&settings)?;
+let settings = App::CAL.load_config::<Settings>()?;
+App::CAL.save_config(&settings)?;
 # Ok::<(), option_sdk::ConfigError>(())
 ```
 
@@ -65,7 +65,7 @@ App::NOTES.save_config(&settings)?;
 | Ensure | `App::ensure()`, `App::ensure_cache()` — create dirs + migrate known legacy trees |
 | Override | `OPTION_HOME` — replace `~/.option` (tests / sandboxes) |
 | Migrate | `migrate_dir()`, `migrate_file()` for app-specific leftovers |
-| Identity | id, mark (◇◆♪), display name, `io.option.*` bundle id |
+| Identity | id, mark (◆ ❯ ♪ ◷ ◇ ⌕), display name, `io.option.*` bundle id |
 | Color | `color_enabled()` (`NO_COLOR`), `color_on_stdout()` / `color_on_stderr()` (`NO_COLOR` + `TERM`≠`dumb` + TTY) |
 | Persistence | `atomic_write()` — flush and sync a sibling temporary file before replacement |
 | Config | `load_toml()`, `load_toml_chain()`, `save_toml()`, `App::load_config()`, `App::save_config()` — typed TOML via `atomic_write()` |
@@ -88,8 +88,6 @@ See [CHANGELOG.md](CHANGELOG.md).
   files/
   os/
   de/
-  fat/
-  notes/
   cal/
   search/           # optionSearch (legacy `needle/` migrated once)
 ```

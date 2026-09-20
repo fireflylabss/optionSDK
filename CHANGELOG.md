@@ -13,6 +13,13 @@ Each release heading is the version and date (`## v0.1.3 · 03/08/2026`); under 
 
 </details>
 
+## v0.1.5 · 20/09/2026
+
+Removes the deprecated `fat` and `notes` apps from the family registry, and gives opsh its own mark. This version was made for the shared SDK on 20/09/2026 (v0.1.5).
+
+- Remove `App::FAT` and `App::NOTES` — both apps are deprecated and no longer ship; `App::ALL` now lists 8 apps.
+- `App::OPSH` mark changes from `◆` to `❯`, echoing the shell's `›` prompt glyph and keeping every shipped app's mark unique.
+
 ## v0.1.4 · 19/09/2026
 
 Adds optionCalendar and optionSearch to the family registry, plus shared config, crash, doctor, terminal style and user-dir helpers. This version was made for the shared SDK on 19/09/2026 (v0.1.4).
